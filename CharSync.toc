@@ -1,0 +1,17 @@
+## Interface: 16001
+## Title: CharSync
+## Notes: Copy the settings of one character to all others – with a before/after comparison per setting
+## Notes-deDE: Einstellungen eines Chars auf alle anderen übertragen – mit Vorher-Nachher-Vergleich je Einstellung
+## Version: @project-version@
+## IconTexture: Interface\Icons\INV_Misc_Note_05
+## X-License: GPL-3.0
+## OptionalDeps: MyCharForever, AtlasLootContinued, Questie, SilverDragon
+## SavedVariables: CharSyncDB
+## SavedVariablesPerCharacter: CharSyncCharDB
+
+Locales.lua
+Translations.lua
+Descriptions.lua
+Core.lua
+Modules.lua
+UI.lua
