@@ -21,9 +21,9 @@ An addon cannot write files of other characters, so the template is stored accou
 - The active Edit Mode layout
 - Key bindings
 - Which addons are enabled
-- Profiles of Ace3 addons (AtlasLoot, Questie, SilverDragon …)
-- MyCharForever settings, including the minimap button position
+- Profiles of addons that store their settings with the Ace3 library
 - Character macros and action bars – same class only
+- Window positions (windows you moved, from WoW and from addons) and minimap button positions
 
 Graphics, sound, most interface options and almost all addon settings are account-wide in WoW anyway.
 
@@ -31,7 +31,11 @@ Graphics, sound, most interface options and almost all addon settings are accoun
 
 - Turn whole sections on or off.
 - Untick a single setting to never sync it again (for all characters).
-- Make a character the template character: it updates the template every time it logs out.
+- Save a template automatically (off by default): once a minute and at logout, only when something has changed.
 - Apply new templates without asking.
+- Section "Account-wide settings" (off by default): once ticked, every change to settings that apply to all characters (account-wide addon settings, account-wide WoW options) appears with its previous value – accept or reset one by one.
+- Reset any entry on its own. On the template character, changes since saving go into the template one by one (**"To template"**). The last apply can be undone (**"Undo"**).
+- Collapse sections; the tick in a section header ticks everything in it.
+- **"Excluded settings"** lists everything you excluded – tick an entry to bring it back.
 
-Commands: `/charsync`, `/charsync save`, `/charsync saveclass`, `/charsync apply`
+Commands: `/charsync`, `/charsync save`, `/charsync saveclass`, `/charsync apply`, `/charsync icon` (brings the minimap button back)

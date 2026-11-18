@@ -5,7 +5,6 @@
 ## Version: @project-version@
 ## IconTexture: Interface\Icons\INV_Misc_Note_05
 ## X-License: GPL-3.0
-## OptionalDeps: MyCharForever, AtlasLootContinued, Questie, SilverDragon
 ## SavedVariables: CharSyncDB
 ## SavedVariablesPerCharacter: CharSyncCharDB
 
@@ -14,4 +13,5 @@ Translations.lua
 Descriptions.lua
 Core.lua
 Modules.lua
+Account.lua
 UI.lua

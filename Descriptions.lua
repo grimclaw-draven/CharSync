@@ -94,69 +94,48 @@ function CS.CVarDesc(name)
     return L["WoW-Einstellung, die pro Charakter gespeichert wird (CVar „%s“). Zu ihr ist keine Beschreibung hinterlegt."]:format(name)
 end
 
+-- Nur die Teile, die sich unterscheiden (bei Listen wie den Aktionsleisten interessiert nur, was anders ist)
+function CS.CVarDiffValues(name, cur, want)
+    if name == "enableMultiActionBars" then
+        local a, b = tonumber(cur) or 0, tonumber(want) or 0
+        local here, there = {}, {}
+        for _, bit in ipairs(BAR_BITS) do
+            local had, will = math.floor(a / bit[1]) % 2 == 1, math.floor(b / bit[1]) % 2 == 1
+            if had ~= will then
+                here[#here + 1] = ("%s: %s"):format(L[bit[2]], had and L["An"] or L["Aus"])
+                there[#there + 1] = ("%s: %s"):format(L[bit[2]], will and L["An"] or L["Aus"])
+            end
+        end
+        if #here > 0 then return table.concat(here, ", "), table.concat(there, ", ") end
+    end
+    return CS.CVarValue(name, cur), CS.CVarValue(name, want)
+end
+
+-- Was „Übernehmen“ bei dieser Option konkret tut
+function CS.CVarEffect(name, cur, want)
+    if name == "enableMultiActionBars" then
+        local a, b = tonumber(cur) or 0, tonumber(want) or 0
+        local on, off = {}, {}
+        for _, bit in ipairs(BAR_BITS) do
+            local had, will = math.floor(a / bit[1]) % 2 == 1, math.floor(b / bit[1]) % 2 == 1
+            if will and not had then on[#on + 1] = L[bit[2]] end
+            if had and not will then off[#off + 1] = L[bit[2]] end
+        end
+        local parts = {}
+        if #on > 0 then parts[#parts + 1] = L["blendet ein: %s"]:format(table.concat(on, ", ")) end
+        if #off > 0 then parts[#parts + 1] = L["blendet aus: %s"]:format(table.concat(off, ", ")) end
+        return table.concat(parts, "; ")
+    end
+    local info = CS.CVAR_INFO[name]
+    if info and info.fmt == OnOff and (tostring(want) == "1" or tostring(want) == "0") then
+        return tostring(want) == "1" and L["schaltet ein"] or L["schaltet aus"]
+    end
+    return L["stellt „%s“ auf „%s“ um"]:format(CS.CVarValue(name, cur), CS.CVarValue(name, want))
+end
+
 function CS.CVarValue(name, v)
     local info = CS.CVAR_INFO[name]
     if info and info.fmt then return info.fmt(v) end
     return tostring(v)
 end
 
--- MyCharForever-Einstellungen
-local MAP_LAYERS = {
-    Journey = "Reiseweg", Deaths = "Tode", LevelUps = "Level-Aufstiege", Journal = "Journal-Einträge",
-    Screenshots = "Screenshot-Orte", Hearthstone = "Ruhestein-Ort", CurrentSession = "aktuelle Sitzung",
-    Drops = "Beute", Iconic = "besondere Momente", Achievements = "Erfolge", Pvp = "PvP",
-}
-CS.MCF_INFO = {
-    minimapAngle = { name = "Position des Minimap-Icons", fmt = Number("%d°"),
-        desc = "Wo das MyCharForever-Icon am Rand der Minimap sitzt (Winkel im Uhrzeigersinn ab rechts)." },
-    showMinimapButton = { name = "Minimap-Icon anzeigen", fmt = OnOff,
-        desc = "Ob MyCharForever ein Icon an der Minimap zeigt." },
-    screenshotEnabled = { name = "Automatische Screenshots", fmt = OnOff,
-        desc = "MyCharForever macht bei besonderen Ereignissen automatisch Screenshots." },
-    screenshotLevelUp = { name = "Screenshot bei Level-Aufstieg", fmt = OnOff, desc = "Screenshot, wenn der Char ein Level aufsteigt." },
-    levelScreenshots = { name = "Level-Screenshots", fmt = OnOff, desc = "Screenshots zu Level-Aufstiegen im Verlauf speichern." },
-    screenshotDeath = { name = "Screenshot beim Tod", fmt = OnOff, desc = "Screenshot, wenn der Char stirbt." },
-    screenshotDeathV106 = { name = "Screenshot beim Tod (neu)", fmt = OnOff, desc = "Neuere Fassung der Option „Screenshot beim Tod“." },
-    screenshotDungeon = { name = "Screenshot in Dungeons", fmt = OnOff, desc = "Screenshots bei Bosskills in Dungeons." },
-    screenshotDungeonV102 = { name = "Screenshot in Dungeons (neu)", fmt = OnOff, desc = "Neuere Fassung der Option „Screenshot in Dungeons“." },
-    screenshotDungeonMode = { name = "Dungeon-Screenshots: wann", desc = "Bei welchen Dungeon-Ereignissen ein Screenshot entsteht (z. B. „every“ = bei jedem Boss)." },
-    screenshotEquip = { name = "Screenshot bei neuer Ausrüstung", fmt = OnOff, desc = "Screenshot, wenn der Char ein besseres Ausrüstungsteil anlegt." },
-    screenshotMinQuality = { name = "Ausrüstungs-Screenshots ab Qualität", desc = "Ab welcher Qualität neue Ausrüstung einen Screenshot auslöst (2 = selten/grün, 3 = rar/blau)." },
-    screenshotMinQualityV30 = { name = "Mindestqualität (neu)", fmt = OnOff, desc = "Interne Umstellung der Mindestqualität." },
-    screenshotLogin = { name = "Screenshot beim Einloggen", fmt = OnOff, desc = "Screenshot direkt nach dem Login." },
-    screenshotPeriodic = { name = "Regelmäßige Screenshots", fmt = OnOff, desc = "Macht in festen Abständen Screenshots." },
-    screenshotInterval = { name = "Abstand regelmäßiger Screenshots", fmt = Number(L["%d Min."]), desc = "Wie oft regelmäßige Screenshots entstehen." },
-    screenshotCooldown = { name = "Mindestabstand zwischen Screenshots", fmt = Number(L["%d s"]), desc = "So viele Sekunden muss mindestens zwischen zwei automatischen Screenshots liegen." },
-    screenshotNoUiInInstance = { name = "Screenshots in Instanzen ohne Oberfläche", fmt = OnOff, desc = "Blendet in Instanzen für den Screenshot die Oberfläche aus." },
-    screenshotLogAll = { name = "Alle Screenshots protokollieren", fmt = OnOff, desc = "Trägt jeden Screenshot in den Verlauf ein." },
-    trackJourney = { name = "Reiseweg aufzeichnen", fmt = OnOff, desc = "Zeichnet auf, wo der Char unterwegs war." },
-    mapJourneyMinLevel = { name = "Reiseweg auf der Karte ab Level", fmt = Number("%d"), desc = "Ab welchem Level der Reiseweg auf der Karte gezeigt wird." },
-    mapJourneyMaxLevel = { name = "Reiseweg auf der Karte bis Level", fmt = Number("%d"), desc = "Bis zu welchem Level der Reiseweg auf der Karte gezeigt wird." },
-    mapMenuCollapsed = { name = "Kartenmenü eingeklappt", fmt = OnOff, desc = "Ob das MyCharForever-Menü auf der Weltkarte eingeklappt ist." },
-}
-for key, label in pairs(MAP_LAYERS) do
-    CS.MCF_INFO["showMap" .. key] = { name = "Karte: " .. label, fmt = OnOff, mapLayer = label }
-end
-
-function CS.MCFLabel(key)
-    local info = CS.MCF_INFO[key]
-    if info then return info.mapLayer and L["Karte: %s"]:format(L[info.mapLayer]) or L[info.name] end
-    return key
-end
-
-function CS.MCFDesc(key)
-    local info = CS.MCF_INFO[key]
-    if info and info.mapLayer then
-        return L["Ob MyCharForever „%s“ als Markierungen auf der Weltkarte einzeichnet."]:format(L[info.mapLayer])
-    end
-    if info then return L[info.desc] end
-    return L["Einstellung „%s“ von MyCharForever."]:format(key)
-end
-
-function CS.MCFValue(key, v)
-    if v == nil then return L["Standard"] end
-    local info = CS.MCF_INFO[key]
-    if info and info.fmt then return info.fmt(v) end
-    if type(v) == "boolean" then return OnOff(v) end
-    return tostring(v)
-end

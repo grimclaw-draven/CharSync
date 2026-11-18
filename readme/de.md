@@ -21,9 +21,9 @@ Ein Addon kann keine Dateien anderer Chars schreiben. Die Vorlage liegt deshalb 
 - Das aktive Edit-Mode-Layout
 - Tastenbelegung
 - Welche Addons aktiviert sind
-- Profile von Ace3-Addons (AtlasLoot, Questie, SilverDragon …)
-- Einstellungen von MyCharForever, auch die Position des Minimap-Icons
+- Profile von Addons, die ihre Einstellungen über die Bibliothek Ace3 speichern
 - Charakter-Makros und Aktionsleisten – nur gleiche Klasse
+- Fensterpositionen (verschobene Fenster von WoW und von Addons) und Positionen der Minimap-Icons
 
 Grafik, Sound, die meisten Interface-Optionen und fast alle Addon-Einstellungen gelten in WoW ohnehin accountweit.
 
@@ -31,7 +31,11 @@ Grafik, Sound, die meisten Interface-Optionen und fast alle Addon-Einstellungen 
 
 - Ganze Bereiche an- oder ausschalten.
 - Einzelne Einstellung abwählen = sie wird nie mehr synchronisiert (für alle Chars).
-- Einen Char zum Vorlage-Char machen: Er aktualisiert die Vorlage bei jedem Ausloggen.
+- Vorlage automatisch speichern (standardmäßig aus): einmal pro Minute und beim Ausloggen, nur wenn sich etwas geändert hat.
 - Neue Vorlagen ohne Nachfrage übernehmen.
+- Bereich „Accountweite Einstellungen“ (standardmäßig aus): angehakt erscheint jede Änderung an Einstellungen, die für alle Chars gelten (accountweite Addon-Einstellungen, accountweite WoW-Optionen), mit vorherigem Wert – einzeln übernehmen oder zurücksetzen.
+- Jeden Eintrag einzeln zurücksetzen. Beim Vorlage-Char gehen Änderungen seit dem Speichern einzeln in die Vorlage (**„In Vorlage“**). Die letzte Übernahme lässt sich rückgängig machen (**„Rückgängig“**).
+- Abschnitte zuklappen; der Haken in der Überschrift hakt alles darin an.
+- **„Abgewählte Einstellungen“** zeigt alles, was du abgewählt hast – Haken setzen holt es zurück.
 
-Befehle: `/charsync`, `/charsync save`, `/charsync saveclass`, `/charsync apply`
+Befehle: `/charsync`, `/charsync save`, `/charsync saveclass`, `/charsync apply`, `/charsync icon` (holt das Minimap-Icon zurück)

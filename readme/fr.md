@@ -21,9 +21,9 @@ Un addon ne peut pas écrire les fichiers des autres personnages : le modèle es
 - La disposition active du mode Édition
 - Les raccourcis
 - Les addons activés
-- Les profils des addons Ace3 (AtlasLoot, Questie, SilverDragon…)
-- Les réglages de MyCharForever, y compris la position du bouton de la minicarte
+- Les profils des addons qui enregistrent leurs réglages avec la bibliothèque Ace3
 - Les macros de personnage et les barres d'action – même classe uniquement
+- Positions des fenêtres (fenêtres déplacées, de WoW et des addons) et positions des boutons de la minicarte
 
 Les graphismes, le son, la plupart des options d'interface et presque tous les réglages d'addons sont de toute façon communs au compte dans WoW.
 
@@ -31,7 +31,11 @@ Les graphismes, le son, la plupart des options d'interface et presque tous les r
 
 - Activer ou désactiver des sections entières.
 - Décocher un réglage pour ne plus jamais le synchroniser (pour tous les personnages).
-- Faire d'un personnage le personnage modèle : il met à jour le modèle à chaque déconnexion.
+- Enregistrer un modèle automatiquement (désactivé par défaut) : une fois par minute et à la déconnexion, seulement si quelque chose a changé.
 - Appliquer les nouveaux modèles sans demander.
+- Section « Réglages du compte » (désactivée par défaut) : une fois cochée, chaque changement des réglages valables pour tous les personnages (réglages d'addons et options de WoW du compte) apparaît avec sa valeur précédente – à accepter ou réinitialiser un par un.
+- Réinitialiser chaque entrée séparément. Sur le personnage modèle, les changements depuis l'enregistrement vont un par un dans le modèle (**« Vers le modèle »**). La dernière application peut être annulée (**« Annuler »**).
+- Replier les sections ; la case dans l'en-tête coche tout ce qu'elle contient.
+- **« Réglages exclus »** liste tout ce que tu as exclu – coche une entrée pour la récupérer.
 
-Commandes : `/charsync`, `/charsync save`, `/charsync saveclass`, `/charsync apply`
+Commandes : `/charsync`, `/charsync save`, `/charsync saveclass`, `/charsync apply`, `/charsync icon` (fait revenir le bouton de la minicarte)

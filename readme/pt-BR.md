@@ -21,9 +21,9 @@ Um addon não consegue gravar arquivos de outros personagens, por isso o modelo 
 - O layout ativo do Modo de Edição
 - Atalhos de teclado
 - Quais addons estão ativados
-- Perfis de addons Ace3 (AtlasLoot, Questie, SilverDragon…)
-- Configurações do MyCharForever, inclusive a posição do botão do minimapa
+- Perfis de addons que salvam as configurações com a biblioteca Ace3
 - Macros do personagem e barras de ação – só da mesma classe
+- Posições das janelas (janelas movidas, do WoW e de addons) e posições dos botões do minimapa
 
 Gráficos, som, a maioria das opções de interface e quase todas as configurações de addons já valem para a conta toda no WoW.
 
@@ -31,7 +31,11 @@ Gráficos, som, a maioria das opções de interface e quase todas as configuraç
 
 - Ative ou desative seções inteiras.
 - Desmarque uma configuração específica para nunca mais sincronizá-la (vale para todos os personagens).
-- Transforme um personagem em personagem modelo: ele atualiza o modelo toda vez que sai do jogo.
+- Salve um modelo automaticamente (desligado por padrão): uma vez por minuto e ao sair do jogo, só quando algo mudou.
 - Aplique novos modelos sem perguntar.
+- Seção “Configurações da conta” (desligada por padrão): marcada, cada mudança em configurações que valem para todos os personagens (configurações de addons e opções do WoW da conta) aparece com o valor anterior – aceite ou redefina uma a uma.
+- Redefina cada entrada separadamente. No personagem modelo, as mudanças desde o salvamento vão uma a uma para o modelo (**"Para o modelo"**). A última aplicação pode ser desfeita (**"Desfazer"**).
+- Recolha seções; a caixa no cabeçalho marca tudo o que há nela.
+- **"Configurações excluídas"** lista tudo o que você excluiu – marque para trazer de volta.
 
-Comandos: `/charsync`, `/charsync save`, `/charsync saveclass`, `/charsync apply`
+Comandos: `/charsync`, `/charsync save`, `/charsync saveclass`, `/charsync apply`, `/charsync icon` (traz de volta o botão do minimapa)

@@ -21,9 +21,9 @@ Un addon non può scrivere i file degli altri personaggi, quindi il modello vien
 - La disposizione attiva della Modalità modifica
 - L'assegnazione tasti
 - Quali addon sono attivi
-- I profili degli addon Ace3 (AtlasLoot, Questie, SilverDragon…)
-- Le impostazioni di MyCharForever, inclusa la posizione del pulsante sulla minimappa
+- I profili degli addon che salvano le impostazioni con la libreria Ace3
 - Macro del personaggio e barre delle azioni, solo per la stessa classe
+- Posizioni delle finestre (finestre spostate, di WoW e degli addon) e posizioni dei pulsanti della minimappa
 
 Grafica, audio, la maggior parte delle opzioni dell'interfaccia e quasi tutte le impostazioni degli addon in WoW valgono comunque per tutto l'account.
 
@@ -31,7 +31,11 @@ Grafica, audio, la maggior parte delle opzioni dell'interfaccia e quasi tutte le
 
 - Attiva o disattiva intere sezioni.
 - Togli la spunta a una singola impostazione per non sincronizzarla mai più (per tutti i personaggi).
-- Rendi un personaggio il personaggio modello: aggiorna il modello a ogni disconnessione.
+- Salva un modello automaticamente (disattivato di default): una volta al minuto e alla disconnessione, solo se qualcosa è cambiato.
 - Applica i nuovi modelli senza chiedere.
+- Sezione “Impostazioni dell'account” (disattivata di default): spuntata, ogni modifica alle impostazioni valide per tutti i personaggi (impostazioni degli addon e opzioni di WoW dell'account) compare con il valore precedente – accettala o ripristinala una per una.
+- Ripristina ogni voce singolarmente. Sul personaggio modello le modifiche dal salvataggio vanno una per una nel modello (**«Nel modello»**). L'ultima applicazione si può annullare (**«Annulla»**).
+- Comprimi le sezioni; la spunta nell'intestazione spunta tutto ciò che contiene.
+- **«Impostazioni escluse»** elenca tutto ciò che hai escluso – spuntalo per recuperarlo.
 
-Comandi: `/charsync`, `/charsync save`, `/charsync saveclass`, `/charsync apply`
+Comandi: `/charsync`, `/charsync save`, `/charsync saveclass`, `/charsync apply`, `/charsync icon` (riporta il pulsante della minimappa)

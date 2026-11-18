@@ -21,9 +21,9 @@ Un addon no puede escribir archivos de otros personajes, así que la plantilla s
 - El diseño activo del Modo Edición
 - Asignación de teclas
 - Qué addons están activados
-- Perfiles de addons Ace3 (AtlasLoot, Questie, SilverDragon…)
-- Ajustes de MyCharForever, incluida la posición del botón del minimapa
+- Perfiles de addons que guardan sus ajustes con la biblioteca Ace3
 - Macros del personaje y barras de acción: solo misma clase
+- Posiciones de ventanas (ventanas movidas, de WoW y de addons) y posiciones de los botones del minimapa
 
 Los gráficos, el sonido, la mayoría de las opciones de interfaz y casi todos los ajustes de addons ya son de toda la cuenta en WoW.
 
@@ -31,7 +31,11 @@ Los gráficos, el sonido, la mayoría de las opciones de interfaz y casi todos l
 
 - Activa o desactiva secciones enteras.
 - Desmarca un ajuste concreto para no sincronizarlo nunca más (para todos los personajes).
-- Convierte un personaje en personaje plantilla: actualiza la plantilla cada vez que cierra sesión.
+- Guarda una plantilla automáticamente (desactivado por defecto): una vez por minuto y al cerrar sesión, solo si algo ha cambiado.
 - Aplica las plantillas nuevas sin preguntar.
+- Sección «Ajustes de la cuenta» (desactivada por defecto): al marcarla, cada cambio en ajustes que valen para todos los personajes (ajustes de addons y opciones de WoW de la cuenta) aparece con su valor anterior; acéptalo o restablécelo uno a uno.
+- Restablece cada entrada por separado. En el personaje plantilla, los cambios desde el guardado pasan uno a uno a la plantilla (**«A la plantilla»**). La última aplicación se puede deshacer (**«Deshacer»**).
+- Contrae secciones; la casilla del encabezado marca todo lo que contiene.
+- **«Ajustes excluidos»** muestra todo lo que excluiste: márcalo para recuperarlo.
 
-Comandos: `/charsync`, `/charsync save`, `/charsync saveclass`, `/charsync apply`
+Comandos: `/charsync`, `/charsync save`, `/charsync saveclass`, `/charsync apply`, `/charsync icon` (recupera el botón del minimapa)
