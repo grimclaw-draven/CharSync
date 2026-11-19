@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- La lista de addons muestra el número de versión en lugar de "@project-version@"
+
 ## 1.0.0 – primera versión
 
 - Guarda los ajustes de un personaje como plantilla; los demás personajes la revisan y la aplican al iniciar sesión

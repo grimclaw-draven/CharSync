@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- L'elenco degli addon mostra il numero di versione invece di "@project-version@"
+
 ## 1.0.0 – prima versione
 
 - Salva le impostazioni di un personaggio come modello; gli altri personaggi lo controllano e lo applicano all'accesso

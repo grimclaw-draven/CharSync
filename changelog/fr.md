@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- La liste des addons affiche le numéro de version au lieu de « @project-version@ »
+
 ## 1.0.0 – première version
 
 - Enregistrer les réglages d'un personnage comme modèle ; les autres personnages le vérifient et l'appliquent à leur connexion

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- A lista de addons mostra o número da versão em vez de "@project-version@"
+
 ## 1.0.0 – primeira versão
 
 - Salve as configurações de um personagem como modelo; os outros personagens revisam e aplicam ao entrar no jogo

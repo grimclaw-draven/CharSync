@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- Die Addon-Liste zeigt die Versionsnummer statt „@project-version@“
+
 ## 1.0.0 – erste Veröffentlichung
 
 - Einstellungen eines Chars als Vorlage speichern; andere Chars prüfen und übernehmen sie beim Login

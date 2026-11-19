@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- The addon list shows the version number instead of "@project-version@"
+
 ## 1.0.0 – first release
 
 - Save the settings of one character as a template; other characters review and apply it when they log in
