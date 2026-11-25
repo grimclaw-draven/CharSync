@@ -513,7 +513,19 @@ CS.RegisterModule("profiles", {
                         toTemplate = function() tpl[name] = cur end,
                         cur = short(cur), new = short(want), reload = true,
                         desc = L["Wechselt %s bei diesem Char auf das Profil „%s“. Danach gelten hier dieselben Einstellungen wie beim Vorlage-Char – Änderungen wirken künftig bei beiden. Das bisherige Profil bleibt gespeichert."]:format(addon, want),
-                        apply = function() db:SetProfile(want) end,
+                        apply = function()
+                            db:SetProfile(want)
+                            -- Manche Clients kennen den Realm-Namen beim Laden der Addons noch nicht; AceDB merkt den
+                            -- Char dann unter „Name - “ statt „Name - Realm“, je nach Ladezeitpunkt mal so, mal so.
+                            -- Damit das Profil nach dem Neuladen sicher gilt, beide Schreibweisen setzen.
+                            local keys = db.sv and db.sv.profileKeys
+                            local me = UnitName and UnitName("player")
+                            if type(keys) == "table" and type(me) == "string" then
+                                local realm = GetRealmName and GetRealmName() or ""
+                                keys[me .. " - " .. realm] = want
+                                keys[me .. " - "] = want
+                            end
+                        end,
                     }
                 end
             end
@@ -544,17 +556,35 @@ CS.SkipFrameName = SkipName
 -- Laden an einer alten Stelle wieder her); bei Icons mit gespeichertem Winkel (LibDBIcon und das eigene Icon:
 -- button.db.minimapPos) den Winkel mitschreiben, damit die Position auch nach dem Neuladen gilt.
 function CS.PlaceFrame(f, name, point, rel, relPoint, x, y)
+    local icon = CS.minimapFrames[name] or (type(name) == "string" and name:find("^LibDBIcon") ~= nil)
+    local deg = icon and CS.IconAngle({ point = point, rel = rel or "Minimap", x = x, y = y })
+    if deg then
+        -- Abstand zur Mitte wie jetzt (die Minimap kann inzwischen größer/kleiner sein), nur der Winkel ändert sich
+        local r = math.sqrt((x or 0) ^ 2 + (y or 0) ^ 2)
+        local ok, p0, r0, _, x0, y0 = pcall(f.GetPoint, f, 1)
+        local relName = ok and type(r0) == "table" and r0.GetName and r0:GetName()
+        if ok and p0 == "CENTER" and relName == "Minimap" and type(x0) == "number" and type(y0) == "number"
+            and not (issecretvalue and (issecretvalue(x0) or issecretvalue(y0))) then
+            local rn = math.sqrt(x0 * x0 + y0 * y0)
+            if rn > 1 then r = rn end
+        end
+        local t = math.rad(deg)
+        x, y = math.cos(t) * r, math.sin(t) * r
+    end
     f:ClearAllPoints()
     f:SetPoint(point, _G[rel] or UIParent, relPoint, x or 0, y or 0)
-    local icon = CS.minimapFrames[name] or (type(name) == "string" and name:find("^LibDBIcon") ~= nil)
     if icon then
-        if (rel == "Minimap" or rel == nil) and point == "CENTER" and (x ~= 0 or y ~= 0) then
-            local deg = math.deg(math.atan2(y or 0, x or 0))
+        if deg then
             local db = rawget(f, "db")
             if type(db) == "table" then
-                db.minimapPos = deg % 360                     -- LibDBIcon und das eigene Icon
+                db.minimapPos = deg                           -- LibDBIcon und das eigene Icon
+                -- LibDBIcon setzt das Icon dann selbst (mit seinem Abstand zur Mitte)
+                local addon = name:match("^LibDBIcon%d*_(.+)$")
+                local DBIcon = addon and LibStub and LibStub("LibDBIcon-1.0", true)
+                if DBIcon and DBIcon.Refresh then pcall(DBIcon.Refresh, DBIcon, addon) end
             elseif CS.Account and CS.Account.WriteIconAngle then
-                CS.Account.WriteIconAngle(name, deg)          -- eigener Winkel in den Addon-Einstellungen
+                local d = deg > 180 and deg - 360 or deg      -- wie atan2: -180 … 180
+                CS.Account.WriteIconAngle(name, d)            -- eigener Winkel in den Addon-Einstellungen
             end
         end
         if f.SetUserPlaced then pcall(f.SetUserPlaced, f, false) end
@@ -697,8 +727,28 @@ do
 end
 function CS.InvalidateFrames() frameScan = nil end
 
+-- Minimap-Icons liegen im Kreis um die Minimap-Mitte. Wie weit außen, bestimmt die Minimap-Größe (und damit z. B.
+-- ein Addon, das die Minimap vergrößert) – gespeichert wird von LibDBIcon und den meisten Addons nur der Winkel.
+-- Deshalb vergleicht und setzt CharSync bei Icons nur den Winkel.
+function CS.IconAngle(p)
+    if type(p) == "string" then
+        local point, rel, _, x, y = p:match("^(.-)|(.-)|(.-)|(.-)|(.-)$")
+        p = point and { point = point, rel = rel, x = tonumber(x), y = tonumber(y) } or nil
+    end
+    if type(p) ~= "table" or p.rel ~= "Minimap" or p.point ~= "CENTER" then return nil end
+    local x, y = p.x or 0, p.y or 0
+    if math.abs(x) < 1 and math.abs(y) < 1 then return nil end
+    return math.deg(math.atan2(y, x)) % 360
+end
+function CS.SameAngle(a, b)
+    local d = math.abs(a - b) % 360
+    return math.min(d, 360 - d) <= 3
+end
+
 local function PosText(p)
     if not p then return L["Standardposition"] end
+    local ang = CS.IconAngle(p)
+    if ang then return ("%d°"):format(math.floor(ang + 0.5) % 360) end
     local txt = ("%d, %d"):format(p.x or 0, p.y or 0)
     if p.w then txt = txt .. (" (%d × %d)"):format(p.w, p.h or 0) end
     return txt
@@ -706,6 +756,8 @@ end
 
 local function SamePos(a, b)
     if not a or not b then return a == b end
+    local aa, ab = CS.IconAngle(a), CS.IconAngle(b)
+    if aa and ab then return CS.SameAngle(aa, ab) end
     if a.point ~= b.point or a.rel ~= b.rel or a.relPoint ~= b.relPoint then return false end
     if math.abs((a.x or 0) - (b.x or 0)) > 1 or math.abs((a.y or 0) - (b.y or 0)) > 1 then return false end
     if (a.w or b.w) and (math.abs((a.w or 0) - (b.w or 0)) > 1 or math.abs((a.h or 0) - (b.h or 0)) > 1) then return false end

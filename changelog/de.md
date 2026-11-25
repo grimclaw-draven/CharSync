@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.2
+
+- Minimap-Icons werden nur noch nach ihrem Winkel verglichen: Eine größere oder kleinere Minimap zeigt nicht mehr alle Icons als geändert, und Zurücksetzen bleibt nach dem Neuladen erhalten
+- Ace3-Addon-Profile: Ein übernommenes Profil bleibt jetzt auch nach dem Neuladen, wenn das Spiel den Realm-Namen beim Laden noch nicht kennt
+
 ## 1.0.1
 
 - Die Addon-Liste zeigt die Versionsnummer statt „@project-version@“

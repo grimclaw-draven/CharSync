@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.2
+
+- Los botones del minimapa solo se comparan por su ángulo: un minimapa más grande o más pequeño ya no muestra todos los botones como cambiados, y un restablecimiento se mantiene tras recargar
+- Perfiles de addons Ace3: un perfil aplicado ahora también se mantiene tras recargar cuando el juego aún no conoce el nombre del reino al cargar
+
 ## 1.0.1
 
 - La lista de addons muestra el número de versión en lugar de "@project-version@"

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.2
+
+- Les boutons de la minicarte ne sont comparés que par leur angle : une minicarte plus grande ou plus petite n'affiche plus tous les boutons comme modifiés, et une réinitialisation tient après le rechargement
+- Profils d'addons Ace3 : un profil appliqué reste aussi après le rechargement quand le jeu ne connaît pas encore le nom du royaume au chargement
+
 ## 1.0.1
 
 - La liste des addons affiche le numéro de version au lieu de « @project-version@ »

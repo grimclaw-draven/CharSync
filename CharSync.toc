@@ -2,7 +2,7 @@
 ## Title: CharSync
 ## Notes: Copy the settings of one character to all others – with a before/after comparison per setting
 ## Notes-deDE: Einstellungen eines Chars auf alle anderen übertragen – mit Vorher-Nachher-Vergleich je Einstellung
-## Version: 1.0.1
+## Version: 1.0.2
 ## IconTexture: Interface\Icons\INV_Misc_Note_05
 ## X-License: GPL-3.0
 ## SavedVariables: CharSyncDB

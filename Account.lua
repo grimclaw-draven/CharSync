@@ -429,6 +429,8 @@ end
 local function Show(v, id)
     if id and id:find("^frame" .. SEP) then
         if v == nil then return L["Standardposition"] end
+        local ang = CS.IconAngle and CS.IconAngle(tostring(v))
+        if ang then return ("%d°"):format(math.floor(ang + 0.5) % 360) end
         local x, y = tostring(v):match("|([^|]*)|([^|]*)$")
         return ("%d, %d"):format(tonumber(x) or 0, tonumber(y) or 0)
     end
@@ -520,6 +522,11 @@ function ACC.Diff()
         -- Kleine neue Tabellen (z. B. eine Position {x, y}) bleiben sichtbar und zurücksetzbar.
         local top = old == nil and not id:find("^frame" .. SEP) and FreshTop(id) or nil
         local freshTable = top ~= nil and (freshCount[top] or 0) > 6
+        -- Minimap-Icons: gleicher Winkel = gleiche Stelle (der Abstand zur Mitte hängt nur an der Minimap-Größe)
+        if old ~= nil and cur ~= nil and id:find("^frame" .. SEP) and CS.IconAngle then
+            local a, b = CS.IconAngle(tostring(old)), CS.IconAngle(tostring(cur))
+            if a and b and CS.SameAngle(a, b) then old = cur end
+        end
         if not freshTable and CS.Ser(old) ~= CS.Ser(cur) and not (CS.db.excluded and CS.db.excluded["acct:" .. id]) then
             local group, label, tech = Describe(id)
             items[#items + 1] = {

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.2
+
+- Minimap buttons are compared by their angle only: a bigger or smaller minimap no longer shows every button as changed, and a reset stays after reloading
+- Ace3 addon profiles: an applied profile now also stays after reloading when the game does not know the realm name yet while loading
+
 ## 1.0.1
 
 - The addon list shows the version number instead of "@project-version@"

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.2
+
+- I pulsanti della minimappa vengono confrontati solo per angolo: una minimappa più grande o più piccola non mostra più tutti i pulsanti come modificati, e un ripristino resta dopo il ricaricamento
+- Profili degli addon Ace3: un profilo applicato ora resta anche dopo il ricaricamento quando il gioco non conosce ancora il nome del reame al caricamento
+
 ## 1.0.1
 
 - L'elenco degli addon mostra il numero di versione invece di "@project-version@"
